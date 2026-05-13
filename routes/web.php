@@ -74,6 +74,12 @@ Route::delete('/admin/products/delete/{id}', [AdminProductController::class, 'de
 
 Route::get('/produk/{id}', [ProductController::class, 'show']);
 
+// FORM EDIT
+Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit']);
+
+// UPDATE DATA
+Route::put('/admin/products/update/{id}', [ProductController::class, 'update']);
+
 Route::get('/price-list', function () {
     return view('price');
 });

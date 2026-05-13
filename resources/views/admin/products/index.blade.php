@@ -117,30 +117,35 @@
                         {{ $item->deskripsi }}
                     </td>
 
-                    <!-- AKSI -->
-                    <td>
+                    <td class="d-flex gap-2">
 
-                        <form 
-                            action="/admin/products/delete/{{ $item->id }}" 
-                            method="POST"
-                        >
+    <!-- TOMBOL EDIT -->
+    <a 
+        href="/admin/products/edit/{{ $item->id }}" 
+        class="btn btn-warning btn-sm"
+    >
+        Edit
+    </a>
 
-                            @csrf
+    <!-- FORM DELETE -->
+    <form 
+        action="/admin/products/delete/{{ $item->id }}" 
+        method="POST"
+    >
 
-                            @method('DELETE')
+        @csrf
+        @method('DELETE')
 
-                            <button 
-                                class="btn btn-danger btn-sm btn-delete"
-                                onclick="return confirm('Yakin ingin menghapus produk ini?')"
-                            >
+        <button 
+            class="btn btn-danger btn-sm btn-delete"
+            onclick="return confirm('Yakin ingin menghapus produk ini?')"
+        >
+            Hapus
+        </button>
 
-                                Hapus
+    </form>
 
-                            </button>
-
-                        </form>
-
-                    </td>
+</td>
 
                 </tr>
 
