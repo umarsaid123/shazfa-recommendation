@@ -2,25 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <title>
-        Rekomendasi Produk | Shazfa Wedding
-    </title>
-
+    <title>Rekomendasi Produk | Shazfa Wedding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
-
         *{
             margin:0;
             padding:0;
@@ -28,693 +17,288 @@
         }
 
         body{
-
             font-family:'Poppins',sans-serif;
-
-            background:#f4f4f4;
+            background: #111111; /* Background dasar tetap gelap */
+            color: #ffffff;
+            min-height:100vh;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | TOPBAR
-        |--------------------------------------------------------------------------
-        */
-
+        /* TOPBAR */
         .topbar{
-
-            background:rgba(255,255,255,0.92);
-
-            backdrop-filter:blur(12px);
-
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter:blur(15px);
             padding:20px 0;
-
-            box-shadow:0 2px 20px rgba(0,0,0,0.05);
-
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             position:sticky;
-
             top:0;
-
             z-index:100;
         }
 
         .logo-img{
-
-            width:55px;
-
-            height:55px;
-
+            width:50px;
+            height:50px;
             object-fit:cover;
-
             border-radius:50%;
-
-            box-shadow:0 5px 15px rgba(0,0,0,0.15);
-
+            border: 2px solid #d4af37;
         }
 
         .brand{
-
-            font-size:24px;
-
+            font-size:22px;
             font-weight:700;
-
-            color:#222;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | TITLE
-        |--------------------------------------------------------------------------
-        */
-
+        /* PAGE TITLE */
         .page-title{
-
-            font-size:46px;
-
+            font-size:42px;
             font-weight:800;
-
             margin-bottom:10px;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .page-subtitle{
-
-            color:#777;
-
-            font-size:17px;
+            color:#aaaaaa;
+            font-size:16px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | CARD
+        /* |--------------------------------------------------------------------------
+        | PRODUCT CARD (WARNA DISESUAIKAN AGAR TIDAK HITAM PEKAT)
         |--------------------------------------------------------------------------
         */
-
         .product-card{
-
-            background:rgba(255,255,255,0.82);
-
-            backdrop-filter:blur(12px);
-
-            border-radius:28px;
-
+            background: rgba(45, 45, 45, 0.85); /* Warna abu-abu arang yang lebih cerah */
+            backdrop-filter:blur(10px);
+            border-radius:25px;
             overflow:hidden;
-
-            transition:0.35s;
-
-            border:1px solid rgba(255,255,255,0.4);
-
+            transition:0.35s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             height:100%;
-
-            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .product-card:hover{
-
             transform:translateY(-10px);
-
-            box-shadow:0 25px 50px rgba(0,0,0,0.12);
+            background: rgba(60, 60, 60, 0.95); /* Lebih cerah saat di-hover */
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | IMAGE
-        |--------------------------------------------------------------------------
-        */
 
         .product-image{
-
             width:100%;
-
-            height:270px;
-
+            height:250px;
             object-fit:cover;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | BODY
-        |--------------------------------------------------------------------------
-        */
-
         .product-body{
-
-            padding:28px;
+            padding:25px;
         }
 
         .product-title{
-
-            font-size:24px;
-
+            font-size:22px;
             font-weight:700;
-
-            margin-bottom:12px;
-
-            color:#222;
+            color:#ffffff;
+            margin-bottom:15px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | BADGE
-        |--------------------------------------------------------------------------
-        */
-
+        /* BADGE */
         .custom-badge{
-
-            background:
-                linear-gradient(135deg,#d4a373,#b5835a);
-
-            color:white;
-
-            padding:8px 18px;
-
+            background: #d4af37;
+            color: #111111;
+            font-weight: 600;
+            padding:5px 15px;
             border-radius:50px;
-
-            font-size:12px;
-
+            font-size:11px;
+            text-transform: uppercase;
+            margin-bottom:15px;
             display:inline-block;
-
-            margin-bottom:18px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | BUTTON
-        |--------------------------------------------------------------------------
-        */
-
-        .btn-modern{
-
-            background:
-                linear-gradient(135deg,#d4a373,#b5835a);
-
-            color:white;
-
-            border:none;
-
-            border-radius:16px;
-
-            padding:14px;
-
-            transition:0.3s;
-
-            font-weight:600;
+        /* INFO TEXT */
+        .info-text {
+            color: #dddddd; /* Warna teks info lebih terang */
+            font-size: 14px;
         }
 
-        .btn-modern:hover{
-
-            transform:translateY(-2px);
-
-            background:
-                linear-gradient(135deg,#b5835a,#9c6644);
-
-            color:white;
+        .info-text i {
+            color: #d4af37;
+            margin-right: 8px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | FORM SELECT
-        |--------------------------------------------------------------------------
-        */
-
+        /* FORM RATING */
         .form-select{
-
-            border-radius:16px;
-
-            padding:12px;
-
-            border:1px solid #eee;
+            background-color: #333333;
+            border: 1px solid #555555;
+            color: white !important;
+            border-radius: 12px;
+            padding: 10px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | SCORE BOX
-        |--------------------------------------------------------------------------
-        */
+        .btn-rating{
+            background: linear-gradient(135deg, #d4af37, #b58d12);
+            color: #000;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            transition: 0.3s;
+        }
 
+        .btn-rating:hover{
+            background: #ffffff;
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        /* SCORE BOX (Lebih Berdimensi) */
         .score-box{
-
-            background:#f8f8f8;
-
-            border-radius:18px;
-
-            padding:12px 18px;
-
-            display:flex;
-
-            justify-content:space-between;
-
-            align-items:center;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .score-value{
-
-            font-weight:700;
-
-            color:#b5835a;
-
-            font-size:18px;
+            font-weight: 800;
+            color: #d4af37;
+            font-size: 18px;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | INFO BOX
-        |--------------------------------------------------------------------------
-        */
-
+        /* INFO BOX (Bawah) */
         .info-box{
-
-            background:#fafafa;
-
-            border-radius:16px;
-
-            padding:12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | EMPTY
-        |--------------------------------------------------------------------------
-        */
-
-        .empty-box{
-
-            background:white;
-
-            padding:70px;
-
-            border-radius:30px;
-
-            text-align:center;
-
-            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+        .info-box strong {
+            color: #d4af37;
+            font-size: 14px;
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | BACK BUTTON
-        |--------------------------------------------------------------------------
-        */
 
         .back-btn{
-
-            border-radius:50px;
-
-            padding:12px 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            padding: 8px 20px;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | MOBILE
-        |--------------------------------------------------------------------------
-        */
+        .back-btn:hover{
+            background: #d4af37;
+            color: #000;
+        }
 
+        /* MOBILE */
         @media(max-width:768px){
-
-            .page-title{
-                font-size:34px;
-            }
-
-            .product-image{
-                height:220px;
-            }
-
+            .page-title{ font-size:30px; }
+            .product-card{ margin-bottom: 20px; }
         }
-
     </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-
     <div class="container d-flex justify-content-between align-items-center">
-
-        <!-- BRAND -->
         <div class="d-flex align-items-center">
-
-            <img
-                src="{{ asset('images/products/logobaru.png') }}"
-                alt="Logo"
-                class="logo-img me-3"
-            >
-
-            <div class="brand">
-
-                Shazfa Wedding
-
-            </div>
-
+            <img src="{{ asset('images/products/logobaru.png') }}" class="logo-img me-3">
+            <div class="brand">Shazfa Wedding</div>
         </div>
-
-        <!-- BACK -->
-        <a href="/"
-            class="btn btn-dark back-btn">
-
-            ← Kembali
-
-        </a>
-
+        <a href="/" class="back-btn"><i class="bi bi-arrow-left"></i> Kembali</a>
     </div>
-
 </div>
 
-<!-- CONTENT -->
 <div class="container py-5">
-
-    <!-- TITLE -->
     <div class="text-center mb-5">
-
-        <h1 class="page-title">
-
-            Rekomendasi Untuk Anda
-
-        </h1>
-
-        <p class="page-subtitle">
-
-            Sistem Hybrid Recommendation berdasarkan tema, warna, kategori, rating dan popularitas produk.
-
-        </p>
-
+        <h1 class="page-title">Rekomendasi Untuk Anda</h1>
+        <p class="page-subtitle">Pilihan terbaik berdasarkan preferensi tema dan gaya pernikahan Anda.</p>
     </div>
 
-    <!-- RESULTS -->
     @if(count($results) > 0)
-
     <div class="row g-4">
-
         @foreach($results as $item)
-
         <div class="col-lg-4 col-md-6">
-
             <div class="product-card">
-
-                <!-- IMAGE -->
-                <img
-                    src="{{ asset('images/products/' . $item['product']->gambar) }}"
-                    class="product-image"
-                >
-
-                <!-- BODY -->
+                <img src="{{ asset('images/products/' . $item['product']->gambar) }}" class="product-image">
+                
                 <div class="product-body">
-
-                    <!-- BADGE -->
-                    <div class="custom-badge">
-
-                        {{ $item['product']->tema }}
-
+                    <div class="custom-badge">{{ $item['product']->tema }}</div>
+                    <h4 class="product-title">{{ $item['product']->nama_produk }}</h4>
+                    
+                    <div class="mb-3">
+                        <p class="info-text mb-1"><i class="bi bi-palette"></i> Warna: {{ $item['product']->warna }}</p>
+                        <p class="info-text mb-0"><i class="bi bi-tag"></i> Kategori: {{ $item['product']->kategori }}</p>
                     </div>
 
-                    <!-- TITLE -->
-                    <h4 class="product-title">
-
-                        {{ $item['product']->nama_produk }}
-
-                    </h4>
-
-                    <!-- INFO -->
-                    <p class="text-muted mb-2">
-
-                        <i class="bi bi-palette-fill"></i>
-
-                        Warna:
-                        {{ $item['product']->warna }}
-
-                    </p>
-
-                    <p class="text-muted">
-
-                        <i class="bi bi-grid-fill"></i>
-
-                        Kategori:
-                        {{ $item['product']->kategori }}
-
-                    </p>
-
-                    <!-- RATING FORM -->
-                    <form action="/rate" method="POST">
-
+                    <form action="/rate" method="POST" class="mb-4">
                         @csrf
-
-                        <input
-                            type="hidden"
-                            name="product_id"
-                            value="{{ $item['product']->id }}"
-                        >
-
-                        <select
-                            name="rating"
-                            class="form-select mb-3"
-                        >
-
-                            <option value="5">
-
-                                ⭐⭐⭐⭐⭐ Sangat Suka
-
-                            </option>
-
-                            <option value="4">
-
-                                ⭐⭐⭐⭐ Suka
-
-                            </option>
-
-                            <option value="3">
-
-                                ⭐⭐⭐ Netral
-
-                            </option>
-
-                            <option value="2">
-
-                                ⭐⭐ Kurang Suka
-
-                            </option>
-
-                            <option value="1">
-
-                                ⭐ Tidak Suka
-
-                            </option>
-
+                        <input type="hidden" name="product_id" value="{{ $item['product']->id }}">
+                        <select name="rating" class="form-select mb-2">
+                            <option value="5">⭐⭐⭐⭐⭐ Sangat Suka</option>
+                            <option value="4">⭐⭐⭐⭐ Suka</option>
+                            <option value="3">⭐⭐⭐ Netral</option>
                         </select>
-
-                        <button class="btn btn-modern w-100">
-
-                            <i class="bi bi-heart-fill"></i>
-
-                            Beri Rating
-
-                        </button>
-
+                        <button class="btn btn-rating w-100">Beri Rating</button>
                     </form>
 
-                    <!-- HYBRID ANALYSIS -->
-                    <div class="mt-4">
-
-                        <!-- BEST MATCH -->
+                    <div class="analysis-section pt-3" style="border-top: 1px solid rgba(255,255,255,0.1)">
                         @if($loop->first)
-
-                            <div class="mb-3">
-
-                                <span class="badge bg-danger px-3 py-2">
-
-                                    🔥 Best Recommendation
-
-                                </span>
-
-                            </div>
-
+                            <span class="badge bg-danger mb-3 px-3 py-2" style="border-radius:50px">🔥 Best Recommendation</span>
                         @endif
 
-                        <!-- SCORE -->
                         <div class="score-box mb-3">
-
-                            <span class="fw-semibold">
-
-                                Hybrid Score
-
-                            </span>
-
-                            <span class="score-value">
-
-                                {{ number_format($item['score'], 3) }}
-
-                            </span>
-
+                            <span style="font-size:14px">Hybrid Score</span>
+                            <span class="score-value">{{ number_format($item['score'], 3) }}</span>
                         </div>
 
-                        <!-- PROGRESS -->
-                        <div class="progress mb-4"
-                            style="height:10px; border-radius:50px;">
-
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-
-                                style="
-                                    width: {{ $item['score'] * 100 }}%;
-                                    background:
-                                    linear-gradient(135deg,#d4a373,#b5835a);
-                                "
-                            >
-
-                            </div>
-
-                        </div>
-
-                        <!-- BREAKDOWN -->
-                        <div class="row text-center g-2">
-
-                            <!-- CBF -->
+                        <div class="row g-2 text-center mb-3">
                             <div class="col-4">
-
                                 <div class="info-box">
-
-                                    <small class="text-muted d-block">
-
-                                        CBF
-
-                                    </small>
-
-                                    <strong>
-
-                                        {{ $item['cbf'] }}
-
-                                    </strong>
-
+                                    <small class="d-block text-muted" style="font-size:10px">CBF</small>
+                                    <strong>{{ $item['cbf'] }}</strong>
                                 </div>
-
                             </div>
-
-                            <!-- RATING -->
                             <div class="col-4">
-
                                 <div class="info-box">
-
-                                    <small class="text-muted d-block">
-
-                                        Rating
-
-                                    </small>
-
-                                    <strong>
-
-                                        {{ $item['rating'] }}
-
-                                    </strong>
-
+                                    <small class="d-block text-muted" style="font-size:10px">Rating</small>
+                                    <strong>{{ $item['rating'] }}</strong>
                                 </div>
-
                             </div>
-
-                            <!-- SALES -->
                             <div class="col-4">
-
                                 <div class="info-box">
-
-                                    <small class="text-muted d-block">
-
-                                        Popularity
-
-                                    </small>
-
-                                    <strong>
-
-                                        {{ $item['sales'] }}
-
-                                    </strong>
-
+                                    <small class="d-block text-muted" style="font-size:10px">Popularity</small>
+                                    <strong>{{ $item['sales'] }}</strong>
                                 </div>
-
                             </div>
-
                         </div>
 
-                        <!-- PRODUCT STATS -->
-                        <div class="mt-4">
-
-                            <!-- AVG -->
-                            <p class="mb-2 text-muted">
-
-                                <i class="bi bi-star-fill text-warning"></i>
-
-                                Rating:
-
-                                <strong>
-
-                                    {{ number_format($item['product']->ratings->avg('rating'),1) ?: 0 }}
-
-                                </strong>
-
-                                / 5
-
-                            </p>
-
-                            <!-- TOTAL -->
-                            <p class="mb-2 text-muted">
-
-                                <i class="bi bi-chat-heart-fill"></i>
-
-                                Total Rating:
-
-                                <strong>
-
-                                    {{ $item['product']->ratings->count() }}
-
-                                </strong>
-
-                            </p>
-
-                            <!-- SALES -->
-                            <p class="mb-0 text-muted">
-
-                                <i class="bi bi-fire"></i>
-
-                                Terjual:
-
-                                <strong>
-
-                                    {{ $item['product']->jumlah_terjual }}
-
-                                </strong>
-
-                            </p>
-
+                        <div style="font-size: 13px; color: #bbb;">
+                            <span class="me-3"><i class="bi bi-star-fill text-warning"></i> {{ number_format($item['product']->ratings->avg('rating'), 1) ?: 0 }}</span>
+                            <span class="me-3"><i class="bi bi-people-fill text-info"></i> {{ $item['product']->ratings->count() }}</span>
+                            <span><i class="bi bi-cart-check-fill text-success"></i> {{ $item['product']->jumlah_terjual }} Terjual</span>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
         @endforeach
-
     </div>
-
     @else
-
-    <!-- EMPTY -->
-    <div class="empty-box">
-
-        <h3 class="fw-bold">
-
-            Tidak Ada Rekomendasi
-
-        </h3>
-
-        <p class="text-muted mt-3">
-
-            Coba gunakan tema, warna, atau kategori lain.
-
-        </p>
-
+    <div class="text-center py-5">
+        <h3>Produk tidak ditemukan</h3>
+        <p class="text-muted">Coba cari dengan kriteria lain.</p>
     </div>
-
     @endif
-
 </div>
 
 </body>

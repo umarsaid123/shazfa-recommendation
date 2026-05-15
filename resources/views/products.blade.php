@@ -2,366 +2,224 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>Semua Produk - Shazfa Wedding</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
-
-        body{
-
-            font-family:'Poppins',sans-serif;
-
-            background:
-            linear-gradient(
-                135deg,
-                #f8f5f2,
-                #f5efe8
-            );
-
-            min-height:100vh;
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Latar belakang gelap yang konsisten */
+            background: #111111;
+            color: #ffffff;
+            min-height: 100vh;
         }
 
-        .section-title{
-
-            font-size:48px;
-
-            font-weight:800;
-
-            color:#222;
-
-            margin-bottom:10px;
+        /* TOPBAR */
+        .topbar {
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 60px;
         }
 
-        .section-subtitle{
-
-            color:#777;
-
-            margin-bottom:50px;
+        .brand {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .product-card{
-
-            border:none;
-
-            border-radius:28px;
-
-            overflow:hidden;
-
-            background:white;
-
-            transition:0.4s;
-
-            height:100%;
-
-            box-shadow:
-            0 10px 35px rgba(0,0,0,0.06);
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
         }
 
-        .product-card:hover{
-
-            transform:
-            translateY(-10px);
-
-            box-shadow:
-            0 20px 45px rgba(0,0,0,0.12);
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 24px;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .product-image{
-
-            width:100%;
-
-            height:250px;
-
-            object-fit:cover;
+        .back-btn:hover {
+            background: #d4af37;
+            color: #111111;
+            border-color: #d4af37;
         }
 
-        .product-body{
-
-            padding:25px;
+        /* TITLE SECTION */
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .badge-theme{
-
-            background:
-            linear-gradient(
-                135deg,
-                #d4a373,
-                #b5835a
-            );
-
-            color:white;
-
-            border-radius:50px;
-
-            padding:8px 16px;
-
-            font-size:12px;
-
-            font-weight:600;
+        .section-subtitle {
+            color: #aaaaaa;
+            margin-bottom: 50px;
         }
 
-        .product-title{
-
-            font-size:24px;
-
-            font-weight:700;
-
-            color:#222;
-
-            margin-top:18px;
-
-            margin-bottom:15px;
+        /* PRODUCT CARD - Adjusted to Charcoal Grey */
+        .product-card {
+            background: rgba(45, 45, 45, 0.85); /* Abu-abu arang agar tidak gelap pekat */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: 0.4s ease;
+            height: 100%;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.4);
         }
 
-        .product-info{
-
-            color:#666;
-
-            font-size:15px;
-
-            margin-bottom:8px;
+        .product-card:hover {
+            transform: translateY(-10px);
+            background: rgba(60, 60, 60, 0.95);
+            border-color: #d4af37;
+            box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
         }
 
-        .btn-detail{
-
-            background:#111;
-
-            color:white;
-
-            border:none;
-
-            border-radius:50px;
-
-            padding:10px 22px;
-
-            font-size:14px;
-
-            transition:0.3s;
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
         }
 
-        .btn-detail:hover{
-
-            background:#d4a373;
-
-            color:white;
-
-            transform:translateY(-2px);
+        .product-body {
+            padding: 25px;
         }
 
-        .sold{
-
-            color:#198754;
-
-            font-weight:700;
-
-            font-size:15px;
+        .badge-theme {
+            background: linear-gradient(135deg, #d4af37, #b58d12);
+            color: #111111;
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .topbar{
-
-            background:white;
-
-            padding:20px 0;
-
-            box-shadow:
-            0 2px 20px rgba(0,0,0,0.05);
-
-            margin-bottom:60px;
+        .product-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 18px;
+            margin-bottom: 15px;
         }
 
-        .brand{
-
-            font-size:30px;
-
-            font-weight:800;
-
-            color:#222;
+        .product-info {
+            color: #cccccc; /* Teks lebih terang agar terbaca */
+            font-size: 14px;
+            margin-bottom: 8px;
         }
 
-        .logo-img{
-
-            width:60px;
-
-            height:60px;
-
-            object-fit:cover;
-
-            border-radius:50%;
-
-            box-shadow:
-            0 10px 25px rgba(0,0,0,0.1);
+        .product-info i {
+            color: #d4af37;
+            margin-right: 8px;
         }
 
-        .back-btn{
+        /* BUTTON & SOLD STATS */
+        .btn-detail {
+            background: linear-gradient(135deg, #d4af37, #b58d12);
+            color: #111111;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
 
-            border-radius:50px;
+        .btn-detail:hover {
+            background: #ffffff;
+            color: #111111;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
 
-            padding:12px 24px;
-
-            font-weight:600;
+        .sold {
+            color: #d4af37; /* Mengikuti warna tema emas */
+            font-weight: 700;
+            font-size: 14px;
         }
 
         @media(max-width:768px){
-
-            .section-title{
-
-                font-size:34px;
-            }
-
-            .product-title{
-
-                font-size:20px;
-            }
-
+            .section-title { font-size:30px; }
+            .product-title { font-size:19px; }
         }
-
     </style>
-
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-
     <div class="container d-flex justify-content-between align-items-center">
-
-        <!-- BRAND -->
         <div class="d-flex align-items-center">
-
-            <img
-                src="{{ asset('images/products/logobaru.png') }}"
-                alt="Logo"
-                class="logo-img me-3"
-            >
-
-            <div class="brand">
-
-                Shazfa Wedding
-
-            </div>
-
+            <img src="{{ asset('images/products/logobaru.png') }}" alt="Logo" class="logo-img me-3">
+            <div class="brand">Shazfa Wedding</div>
         </div>
-
-        <!-- BACK -->
-        <a href="/"
-        class="btn btn-dark back-btn">
-
-            ← Home
-
+        <a href="/" class="btn back-btn">
+            <i class="bi bi-house-door-fill me-1"></i> Home
         </a>
-
     </div>
-
 </div>
 
-<!-- CONTENT -->
-<div class="container">
+<div class="container pb-5">
 
-    <!-- TITLE -->
     <div class="text-center mb-5">
-
-        <h1 class="section-title">
-
-            ✨ Semua Produk Undangan
-
-        </h1>
-
-        <p class="section-subtitle">
-
-            Koleksi undangan premium dengan desain elegan dan modern
-
-        </p>
-
+        <h1 class="section-title">✨ Semua Produk Undangan</h1>
+        <p class="section-subtitle">Koleksi undangan premium dengan desain elegan dan modern</p>
     </div>
 
-    <!-- PRODUCTS -->
     <div class="row g-4">
-
         @foreach($products as $item)
-
         <div class="col-lg-4 col-md-6">
-
             <div class="product-card">
+                
+                <img src="{{ asset('images/products/' . $item->gambar) }}" class="product-image" alt="{{ $item->nama_produk }}">
 
-                <!-- IMAGE -->
-                <img
-                    src="{{ asset('images/products/' . $item->gambar) }}"
-                    class="product-image"
-                >
-
-                <!-- BODY -->
                 <div class="product-body">
+                    
+                    <span class="badge-theme">{{ $item->tema }}</span>
 
-                    <!-- THEME -->
-                    <span class="badge-theme">
-
-                        {{ $item->tema }}
-
-                    </span>
-
-                    <!-- TITLE -->
-                    <h4 class="product-title">
-
-                        {{ $item->nama_produk }}
-
-                    </h4>
-
-                    <!-- INFO -->
-                    <p class="product-info">
-
-                        <i class="bi bi-palette-fill"></i>
-
-                        Warna:
-                        {{ $item->warna }}
-
-                    </p>
+                    <h4 class="product-title">{{ $item->nama_produk }}</h4>
 
                     <p class="product-info">
-
-                        <i class="bi bi-grid-fill"></i>
-
-                        {{ $item->kategori }}
-
+                        <i class="bi bi-palette-fill"></i> Warna: {{ $item->warna }}
+                    </p>
+                    <p class="product-info">
+                        <i class="bi bi-grid-fill"></i> Kategori: {{ $item->kategori }}
                     </p>
 
-                    <!-- ACTION -->
-                    <div class="d-flex justify-content-between align-items-center mt-4">
-
-                        <a href="/produk/{{ $item->id }}"
-                        class="btn-detail text-decoration-none">
-
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                        <a href="/produk/{{ $item->id }}" class="btn-detail text-decoration-none">
                             Detail
-
                         </a>
-
                         <span class="sold">
-
-                            Terjual {{ $item->jumlah_terjual }}
-
+                            <i class="bi bi-fire me-1"></i> Terjual {{ $item->jumlah_terjual }}
                         </span>
-
                     </div>
 
                 </div>
-
             </div>
-
         </div>
-
         @endforeach
-
     </div>
 
 </div>
