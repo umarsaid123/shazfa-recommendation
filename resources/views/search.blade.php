@@ -7,13 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
@@ -225,17 +222,14 @@
 </head>
 <body>
 
-<!-- BACK -->
 <div class="back-btn">
     <a href="/">
         <i class="bi bi-arrow-left"></i> Home
     </a>
 </div>
 
-<!-- CARD -->
 <div class="search-card">
 
-    <!-- HEADER -->
     <div class="text-center">
         <h1 class="title">Cari Rekomendasi</h1>
         <p class="subtitle">
@@ -243,20 +237,18 @@
         </p>
     </div>
 
-    <!-- FORM -->
     <form action="/cari-rekomendasi" method="POST">
 
         @csrf
 
         <div class="row">
 
-            <!-- TEMA (Ubah Ke Dropdown) -->
             <div class="col-md-4 mb-4">
                 <label class="form-label">Tema Pernikahan</label>
                 <div class="input-wrapper">
                     <i class="bi bi-stars input-icon"></i>
-                    <select name="tema" class="form-select" required>
-                        <option value="" disabled selected hidden>Pilih Tema...</option>
+                    <select name="tema" class="form-select">
+                        <option value="">Semua Tema</option>
                         <option value="Luxury">Luxury</option>
                         <option value="Elegant">Elegant</option>
                         <option value="Rustic">Rustic</option>
@@ -268,13 +260,12 @@
                 </div>
             </div>
 
-            <!-- WARNA (Ubah Ke Dropdown) -->
             <div class="col-md-4 mb-4">
                 <label class="form-label">Warna Dominan</label>
                 <div class="input-wrapper">
                     <i class="bi bi-palette-fill input-icon"></i>
-                    <select name="warna" class="form-select" required>
-                        <option value="" disabled selected hidden>Pilih Warna...</option>
+                    <select name="warna" class="form-select">
+                        <option value="">Semua Warna</option>
                         <option value="Gold">Gold (Emas)</option>
                         <option value="White">White (Putih)</option>
                         <option value="Pink">Pink (Merah Muda)</option>
@@ -287,7 +278,6 @@
                 </div>
             </div>
 
-            <!-- KATEGORI -->
             <div class="col-md-4 mb-4">
                 <label class="form-label">Kategori</label>
                 <div class="input-wrapper">
@@ -302,7 +292,6 @@
 
         </div>
 
-        <!-- BUTTON -->
         <div class="d-grid mt-3">
             <button class="btn btn-search">
                 <i class="bi bi-search-heart-fill"></i> Cari Rekomendasi Sekarang
@@ -311,7 +300,6 @@
 
     </form>
 
-    <!-- QUICK TAG -->
     <div class="quick-tags text-center">
         <span class="tag">Rustic</span>
         <span class="tag">Elegant</span>

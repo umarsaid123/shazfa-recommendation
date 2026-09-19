@@ -133,6 +133,9 @@
         .product-info i {
             color: #d4af37;
             margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            display: inline-block;
         }
 
         /* BUTTON & SOLD STATS */
@@ -144,6 +147,8 @@
             padding: 10px 24px;
             font-size: 14px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: 0.3s;
         }
 
@@ -206,6 +211,10 @@
                     <p class="product-info">
                         <i class="bi bi-grid-fill"></i> Kategori: {{ $item->kategori }}
                     </p>
+                    
+                    <p class="product-info">
+                        <i class="bi bi-file-earmark-text-fill"></i> Bahan: {{ $item->bahan ?? 'Kertas Premium' }}
+                    </p>
 
                     <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
                         <a href="/produk/{{ $item->id }}" class="btn-detail text-decoration-none">
@@ -224,5 +233,6 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -11,13 +11,17 @@ class Product extends Model
         'kategori',
         'tema',
         'warna',
+        'bahan',
         'deskripsi',
         'gambar',
         'jumlah_terjual'
     ];
 
+    /**
+     * Relasi One-to-Many: Satu produk memiliki banyak data rating.
+     */
     public function ratings()
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(Rating::class, 'product_id');
     }
 }

@@ -56,6 +56,12 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="bahan" class="form-label fw-bold">Bahan Undangan</label>
+                        <input type="text" class="form-control" id="bahan" name="bahan" value="{{ old('bahan', $product->bahan ?? '') }}" placeholder="Contoh: Jasmine, Akrilik, Art Paper">
+                    </div>
+
+
+                    <div class="mb-3">
                         <label>Tema</label>
                         <input type="text" name="tema" class="form-control">
                     </div>

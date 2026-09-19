@@ -18,7 +18,7 @@
 
         body{
             font-family:'Poppins',sans-serif;
-            background: #111111; /* Background dasar tetap gelap */
+            background: #111111;
             color: #ffffff;
             min-height:100vh;
         }
@@ -63,14 +63,11 @@
         .page-subtitle{
             color:#aaaaaa;
             font-size:16px;
-        }
+            }
 
-        /* |--------------------------------------------------------------------------
-        | PRODUCT CARD (WARNA DISESUAIKAN AGAR TIDAK HITAM PEKAT)
-        |--------------------------------------------------------------------------
-        */
+        /* PRODUCT CARD */
         .product-card{
-            background: rgba(45, 45, 45, 0.85); /* Warna abu-abu arang yang lebih cerah */
+            background: rgba(45, 45, 45, 0.85);
             backdrop-filter:blur(10px);
             border-radius:25px;
             overflow:hidden;
@@ -82,7 +79,7 @@
 
         .product-card:hover{
             transform:translateY(-10px);
-            background: rgba(60, 60, 60, 0.95); /* Lebih cerah saat di-hover */
+            background: rgba(60, 60, 60, 0.95);
             border-color: #d4af37;
             box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
         }
@@ -120,22 +117,43 @@
 
         /* INFO TEXT */
         .info-text {
-            color: #dddddd; /* Warna teks info lebih terang */
+            color: #dddddd;
             font-size: 14px;
         }
 
         .info-text i {
             color: #d4af37;
             margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            display: inline-block;
         }
 
-        /* FORM RATING */
-        .form-select{
-            background-color: #333333;
-            border: 1px solid #555555;
-            color: white !important;
-            border-radius: 12px;
-            padding: 10px;
+        /* --- INTERACTIVE STAR RATING SYSTEM (BARU) --- */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 28px;
+            color: #555555;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        /* Efek hover dan checked dari kanan ke kiri */
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffc107;
         }
 
         .btn-rating{
@@ -154,29 +172,35 @@
             transform: scale(1.02);
         }
 
-        /* SCORE BOX (Lebih Berdimensi) */
+        /* SCORE BOX */
         .score-box{
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.5);
             border-radius: 15px;
             padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #ffffff !important;
         }
 
         .score-value{
             font-weight: 800;
-            color: #d4af37;
+            color: #ffffff !important;
             font-size: 18px;
         }
 
-        /* INFO BOX (Bawah) */
+        /* INFO BOX */
         .info-box{
             background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .info-box .text-muted {
+            color: #e2e8f0 !important;
+            font-size: 10px;
         }
 
         .info-box strong {
@@ -199,7 +223,63 @@
             color: #000;
         }
 
-        /* MOBILE */
+        /* STYLING DROPDOWN UNTUK HYBRID SCORE */
+        .analysis-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .analysis-menu {
+            display: none;
+            position: absolute;
+            bottom: 105%;
+            left: 0;
+            width: 100%;
+            background: rgba(30, 30, 30, 0.98);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            z-index: 10;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .analysis-dropdown:hover .analysis-menu {
+            display: block;
+            animation: fadeInUp 0.25s ease-out;
+        }
+
+        .btn-analysis-trigger {
+            background: rgba(255, 255, 255, 0.05);
+            color: #aaa;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            width: 100%;
+            transition: 0.3s;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .analysis-dropdown:hover .btn-analysis-trigger {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media(max-width:768px){
             .page-title{ font-size:30px; }
             .product-card{ margin-bottom: 20px; }
@@ -224,6 +304,13 @@
         <p class="page-subtitle">Pilihan terbaik berdasarkan preferensi tema dan gaya pernikahan Anda.</p>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show border-0 mb-4 text-white" style="background: #2e7d32; border-radius:12px;" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if(count($results) > 0)
     <div class="row g-4">
         @foreach($results as $item)
@@ -237,17 +324,31 @@
                     
                     <div class="mb-3">
                         <p class="info-text mb-1"><i class="bi bi-palette"></i> Warna: {{ $item['product']->warna }}</p>
-                        <p class="info-text mb-0"><i class="bi bi-tag"></i> Kategori: {{ $item['product']->kategori }}</p>
+                        <p class="info-text mb-1"><i class="bi bi-tag"></i> Kategori: {{ $item['product']->kategori }}</p>
+                        <p class="info-text mb-0"><i class="bi bi-file-earmark-text"></i> Bahan: {{ $item['product']->bahan ?? 'Kertas Premium' }}</p>
                     </div>
 
                     <form action="/rate" method="POST" class="mb-4">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $item['product']->id }}">
-                        <select name="rating" class="form-select mb-2">
-                            <option value="5">⭐⭐⭐⭐⭐ Sangat Suka</option>
-                            <option value="4">⭐⭐⭐⭐ Suka</option>
-                            <option value="3">⭐⭐⭐ Netral</option>
-                        </select>
+                        
+                        <div class="star-rating">
+                            <input type="radio" id="star5-{{ $loop->index }}" name="rating" value="5" required />
+                            <label for="star5-{{ $loop->index }}"><i class="bi bi-star-fill"></i></label>
+                            
+                            <input type="radio" id="star4-{{ $loop->index }}" name="rating" value="4" />
+                            <label for="star4-{{ $loop->index }}"><i class="bi bi-star-fill"></i></label>
+                            
+                            <input type="radio" id="star3-{{ $loop->index }}" name="rating" value="3" />
+                            <label for="star3-{{ $loop->index }}"><i class="bi bi-star-fill"></i></label>
+                            
+                            <input type="radio" id="star2-{{ $loop->index }}" name="rating" value="2" />
+                            <label for="star2-{{ $loop->index }}"><i class="bi bi-star-fill"></i></label>
+                            
+                            <input type="radio" id="star1-{{ $loop->index }}" name="rating" value="1" />
+                            <label for="star1-{{ $loop->index }}"><i class="bi bi-star-fill"></i></label>
+                        </div>
+
                         <button class="btn btn-rating w-100">Beri Rating</button>
                     </form>
 
@@ -256,36 +357,50 @@
                             <span class="badge bg-danger mb-3 px-3 py-2" style="border-radius:50px">🔥 Best Recommendation</span>
                         @endif
 
-                        <div class="score-box mb-3">
-                            <span style="font-size:14px">Hybrid Score</span>
-                            <span class="score-value">{{ number_format($item['score'], 3) }}</span>
+                        <div class="analysis-dropdown">
+                            <div class="btn-analysis-trigger">
+                                <i class="bi bi-bar-chart-fill me-1"></i> Lihat Metrik Rekomendasi (Sistem)
+                            </div>
+                            
+                            <div class="analysis-menu">
+                                <div class="score-box mb-3">
+                                    <span style="font-size:14px">Hybrid Score</span>
+                                    <span class="score-value">{{ $item['score'] }}</span>
+                                </div>
+
+                                <div class="row g-2 text-center">
+                                    <div class="col-4">
+                                        <div class="info-box">
+                                            <small class="d-block text-muted">CBF</small>
+                                            <strong>{{ $item['cbf'] }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="info-box">
+                                            <small class="d-block text-muted">Rating</small>
+                                            <strong>{{ $item['rating'] }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="info-box">
+                                            <small class="d-block text-muted">Popularity</small>
+                                            <strong>{{ $item['sales'] }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="row g-2 text-center mb-3">
-                            <div class="col-4">
-                                <div class="info-box">
-                                    <small class="d-block text-muted" style="font-size:10px">CBF</small>
-                                    <strong>{{ $item['cbf'] }}</strong>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="info-box">
-                                    <small class="d-block text-muted" style="font-size:10px">Rating</small>
-                                    <strong>{{ $item['rating'] }}</strong>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="info-box">
-                                    <small class="d-block text-muted" style="font-size:10px">Popularity</small>
-                                    <strong>{{ $item['sales'] }}</strong>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="font-size: 13px; color: #bbb;">
-                            <span class="me-3"><i class="bi bi-star-fill text-warning"></i> {{ number_format($item['product']->ratings->avg('rating'), 1) ?: 0 }}</span>
-                            <span class="me-3"><i class="bi bi-people-fill text-info"></i> {{ $item['product']->ratings->count() }}</span>
-                            <span><i class="bi bi-cart-check-fill text-success"></i> {{ $item['product']->jumlah_terjual }} Terjual</span>
+                        <div class="d-flex align-items-center mt-3" style="font-size: 13px; color: #bbb;">
+                            <span class="me-2">
+                                <i class="bi bi-star-fill text-warning"></i> 
+                                <strong>{{ number_format((float)$item['product']->ratings->avg('rating'), 2) ?: '0.0' }}</strong>
+                            </span>
+                            <span class="text-white">({{ $item['product']->ratings->count() }} ulasan)</span>
+                            
+                            <span class="ms-auto">
+                                <i class="bi bi-bag-check-fill text-success"></i> {{ $item['product']->jumlah_terjual ?? 0 }} Terjual
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -295,11 +410,12 @@
     </div>
     @else
     <div class="text-center py-5">
-        <h3>Produk tidak ditemukan</h3>
+        <h3 class="text-white">Produk tidak ditemukan</h3>
         <p class="text-muted">Coba cari dengan kriteria lain.</p>
     </div>
     @endif
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -355,7 +355,7 @@
     <div class="container">
         <h1>
             Wedding Invitation<br>
-            Recommendation System
+            Recommendation
         </h1>
         <p class="mt-4">
             Temukan desain undangan terbaik sesuai konsep pernikahan impian Anda dengan sistem rekomendasi Hybrid Filtering modern yang lebih personal dan akurat.

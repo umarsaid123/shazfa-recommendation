@@ -9,143 +9,128 @@ class RecommendationController extends Controller
 {
     public function recommend(Request $request)
     {
+        // 1. Tangkap input filter dari user
+        $rawTema     = trim($request->tema ?? '');
+        $rawWarna    = trim($request->warna ?? '');
+        $rawKategori = trim($request->kategori ?? '');
 
-        $products = Product::with('ratings')->get();
+        // Bersihkan filter
+        $inputTema     = ($rawTema === 'Semua Tema' || $rawTema === '') ? null : strtolower($rawTema);
+        $inputKategori = ($rawKategori === 'Semua Produk' || $rawKategori === '') ? null : strtolower($rawKategori);
+        
+        $inputWarna = null;
+        if ($rawWarna !== 'Semua Warna' && $rawWarna !== '') {
+            $warnaBersih = explode(' ', $rawWarna)[0];
+            $inputWarna = strtolower($warnaBersih);
+        }
 
-        // input user
-        $inputTema = strtolower($request->tema ?? '');
-        $inputWarna = strtolower($request->warna ?? '');
-        $inputKategori = strtolower($request->kategori ?? '');
+        // 2. Query Data Produk
+        $query = Product::with('ratings')
+            ->withAvg('ratings as rata_rata_rating', 'rating');
 
-        $scoredProducts = $products->map(function ($product)
-            use ($inputTema, $inputWarna, $inputKategori)
-        {
+        if ($inputTema || $inputWarna || $inputKategori) {
+            $query->where(function($q) use ($inputTema, $inputWarna, $inputKategori) {
+                $hasFilter = false;
 
-            /*
-            |--------------------------------------------------------------------------
-            | CONTENT BASED FILTERING
-            |--------------------------------------------------------------------------
-            */
+                if ($inputTema) {
+                    $q->where('tema', 'LIKE', '%' . $inputTema . '%');
+                    $hasFilter = true;
+                }
 
-            $cbfScore = 0;
+                if ($inputWarna) {
+                    if ($hasFilter) {
+                        $q->orWhere('warna', 'LIKE', '%' . $inputWarna . '%');
+                    } else {
+                        $q->where('warna', 'LIKE', '%' . $inputWarna . '%');
+                        $hasFilter = true;
+                    }
+                }
 
-            // Tema (40%)
-            if(
-                $inputTema &&
-                str_contains(
-                    strtolower($product->tema),
-                    $inputTema
-                )
-            ){
-                $cbfScore += 0.4;
+                if ($inputKategori) {
+                    if ($hasFilter) {
+                        $q->orWhere('kategori', 'LIKE', '%' . $inputKategori . '%');
+                    } else {
+                        $q->where('kategori', 'LIKE', '%' . $inputKategori . '%');
+                        $hasFilter = true;
+                    }
+                }
+            });
+        }
+
+        $products = $query->get();
+
+        // [DIPERBAIKI] Ambil Penjualan Terbanyak (Max Sales) dari Database secara Dinamis
+        $maxSales = Product::max('jumlah_terjual') ?: 1;
+
+        // 3. Proses Perhitungan Skor Hybrid
+        $scoredProducts = $products->map(function ($product) use ($inputTema, $inputWarna, $inputKategori, $maxSales) {
+
+            // --- A. CONTENT BASED FILTERING ---
+            $cbfPoin = 0;
+            $totalKriteriaDihitung = 0;
+            
+            $dbTema     = strtolower(trim($product->tema ?? ''));
+            $dbWarna    = strtolower(trim($product->warna ?? ''));
+            $dbKategori = strtolower(trim($product->kategori ?? ''));
+
+            if ($inputTema) {
+                $totalKriteriaDihitung += 4;
+                if (str_contains($dbTema, $inputTema)) { $cbfPoin += 4; }
             }
 
-            // Warna (20%)
-            if(
-                $inputWarna &&
-                str_contains(
-                    strtolower($product->warna),
-                    $inputWarna
-                )
-            ){
-                $cbfScore += 0.2;
+            if ($inputWarna) {
+                $totalKriteriaDihitung += 2;
+                if (str_contains($dbWarna, $inputWarna)) { $cbfPoin += 2; }
             }
 
-            // Kategori (10%)
-            if(
-                $inputKategori &&
-                str_contains(
-                    strtolower($product->kategori),
-                    $inputKategori
-                )
-            ){
-                $cbfScore += 0.1;
+            if ($inputKategori) {
+                $totalKriteriaDihitung += 1;
+                if (str_contains($dbKategori, $inputKategori)) { $cbfPoin += 1; }
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | COLLABORATIVE FILTERING
-            |--------------------------------------------------------------------------
-            */
+            $cbfMurni = $totalKriteriaDihitung > 0 ? ($cbfPoin / $totalKriteriaDihitung) : 1.0;
 
-            $ratings = $product->ratings;
+            // --- B. RATING / REPUTATION ---
+            $avgRating = $product->rata_rata_rating ?? 0;
+            $ratingMurni = $avgRating / 5; 
 
-            // rating rata-rata
-            if($ratings->count() > 0)
-            {
-                $avgRating = $ratings->avg('rating');
-            }
-            else
-            {
-                $avgRating = 0;
-            }
+            // --- C. POPULARITY SCORE (DIPERBAIKI) ---
+            $sales = $product->jumlah_terjual ?? 0;
+            $popularityMurni = $sales / $maxSales; // Dinamis dibagi Max Sales riil
 
-            // normalisasi rating
-            $ratingScore = ($avgRating / 5) * 0.2;
+            // --- D. FINAL HYBRID SCORE ---
+            $bobotCBF          = 0.50; // 50%
+            $bobotRating       = 0.35; // 35%
+            $bobotPopularitas  = 0.15; // 15%
 
-            // confidence rating
-            $confidence =
-                1 - exp(-$ratings->count());
-
-            $ratingScore =
-                $ratingScore * $confidence;
-
-            /*
-            |--------------------------------------------------------------------------
-            | POPULARITY SCORE
-            |--------------------------------------------------------------------------
-            */
-
-            // jumlah terjual
-            $sales =
-                $product->jumlah_terjual ?? 0;
-
-            // normalisasi penjualan
-            $salesScore =
-                min($sales / 100, 1) * 0.1;
-
-            /*
-            |--------------------------------------------------------------------------
-            | FINAL HYBRID SCORE
-            |--------------------------------------------------------------------------
-            */
-
-            $finalScore =
-                $cbfScore +
-                $ratingScore +
-                $salesScore;
+            $finalScore = ($cbfMurni * $bobotCBF) + 
+                          ($ratingMurni * $bobotRating) + 
+                          ($popularityMurni * $bobotPopularitas);
 
             return [
-
                 'product' => $product,
-
-                'score' => round($finalScore, 3),
-
-                // debug tambahan
-                'cbf' => round($cbfScore, 3),
-
-                'rating' => round($ratingScore, 3),
-
-                'sales' => round($salesScore, 3)
-
+                'score'   => (float)$finalScore,
+                
+                'cbf_raw'    => $cbfMurni * $bobotCBF,
+                'rating_raw' => $ratingMurni * $bobotRating,
+                'sales_raw'  => $popularityMurni * $bobotPopularitas
             ];
-
         });
 
-        /*
-        |--------------------------------------------------------------------------
-        | SORTING
-        |--------------------------------------------------------------------------
-        */
+        // 4. Pengurutan data skor tertinggi ke terendah
+        $sortedProducts = $scoredProducts->sortByDesc('score')->values();
 
-        $results = $scoredProducts
-            ->sortByDesc('score')
-            ->values();
+        // 5. Mapping Akhir format Tampilan 3 Desimal
+        $results = $sortedProducts->map(function ($item) {
+            return [
+                'product' => $item['product'],
+                'score'   => number_format($item['score'], 3),
+                'cbf'     => number_format($item['cbf_raw'], 3),
+                'rating'  => number_format($item['rating_raw'], 3),
+                'sales'   => number_format($item['sales_raw'], 3),
+            ];
+        });
 
-        return view(
-            'recommendation',
-            compact('results')
-        );
-
+        return view('recommendation', compact('results'));
     }
 }

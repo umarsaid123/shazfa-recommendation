@@ -9,7 +9,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        // Mengambil produk terbaru untuk halaman katalog depan
+        $products = Product::latest()->get();
 
         return view('products', compact('products'));
     }
@@ -22,11 +23,11 @@ class ProductController extends Controller
     }
 
     public function admin()
-{
-    $products = Product::all();
+    {
+        $products = Product::latest()->get();
 
-    return view('admin.products', compact('products'));
-}
+        return view('admin.products', compact('products'));
+    }
 
     public function edit($id)
     {
@@ -48,6 +49,12 @@ class ProductController extends Controller
 
             $file->move(public_path('images/products'), $filename);
 
+            // Hapus gambar lama jika ada agar penyimpanan tidak penuh
+            $oldPath = public_path('images/products/' . $product->gambar);
+            if ($product->gambar && file_exists($oldPath)) {
+                @unlink($oldPath);
+            }
+
             $product->gambar = $filename;
         }
 
@@ -56,6 +63,7 @@ class ProductController extends Controller
         $product->tema = $request->tema;
         $product->warna = $request->warna;
         $product->kategori = $request->kategori;
+        $product->bahan = $request->bahan; // <--- SEKARANG BAHAN SUDAH IKUT DIUPDATE
         $product->deskripsi = $request->deskripsi;
         $product->jumlah_terjual = $request->jumlah_terjual;
 

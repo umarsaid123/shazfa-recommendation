@@ -17,41 +17,49 @@ class AdminProductController extends Controller
     }
 
     public function edit($id)
-{
-    $product = Product::findOrFail($id);
+    {
+        $product = Product::findOrFail($id);
 
-    return view('admin.edit_product', compact('product'));
-}
-
-public function update(Request $request, $id)
-{
-    $product = Product::findOrFail($id);
-
-    // UPDATE GAMBAR
-    if ($request->hasFile('gambar')) {
-
-        $file = $request->file('gambar');
-
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-
-        $file->move(public_path('images/products'), $filename);
-
-        $product->gambar = $filename;
+        // Mengarah ke resources/views/admin/products/edit_product.blade.php
+        return view('admin.products.edit_product', compact('product'));
     }
 
-    // UPDATE DATA
-    $product->nama_produk = $request->nama_produk;
-    $product->tema = $request->tema;
-    $product->warna = $request->warna;
-    $product->kategori = $request->kategori;
-    $product->deskripsi = $request->deskripsi;
-    $product->jumlah_terjual = $request->jumlah_terjual;
+    public function update(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
 
-    $product->save();
+        // UPDATE GAMBAR
+        if ($request->hasFile('gambar')) {
 
-    return redirect('/admin/products')
-        ->with('success', 'Produk berhasil diupdate');
-}
+            $file = $request->file('gambar');
+
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('images/products'), $filename);
+
+            // Hapus gambar lama jika ada agar penyimpanan tidak penuh
+            $oldPath = public_path('images/products/' . $product->gambar);
+            if ($product->gambar && file_exists($oldPath)) {
+                @unlink($oldPath);
+            }
+
+            $product->gambar = $filename;
+        }
+
+        // UPDATE DATA
+        $product->nama_produk = $request->nama_produk;
+        $product->tema = $request->tema;
+        $product->warna = $request->warna;
+        $product->kategori = $request->kategori;
+        $product->bahan = $request->bahan; // <--- MENAMBAHKAN UPDATE BAHAN
+        $product->deskripsi = $request->deskripsi;
+        $product->jumlah_terjual = $request->jumlah_terjual;
+
+        $product->save();
+
+        return redirect('/admin/products')
+            ->with('success', 'Produk berhasil diupdate');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -103,15 +111,14 @@ public function update(Request $request, $id)
 
         // simpan database
         Product::create([
-
             'nama_produk' => $request->nama_produk,
             'kategori' => $request->kategori,
             'tema' => $request->tema,
             'warna' => $request->warna,
+            'bahan' => $request->bahan, // <--- MENAMBAHKAN SIMPAN BAHAN
             'deskripsi' => $request->deskripsi,
             'gambar' => $imageName,
             'jumlah_terjual' => $request->jumlah_terjual
-
         ]);
 
         return redirect('/admin/products')
